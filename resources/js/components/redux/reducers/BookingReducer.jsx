@@ -1,6 +1,7 @@
 import * as ActionTypes from '../ActionTypes';
 
 const initState = {
+    index:0,
     detail: {
         id:0,
         country:'',
@@ -14,7 +15,6 @@ const initState = {
         price:'',
         count:'',
     },
-    index:0,
 }
 
 const BookingReducer = (state = initState, action) => {

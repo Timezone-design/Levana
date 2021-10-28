@@ -20,10 +20,10 @@ export default function EditProfile() {
     const classes = useStyles();
     const [profile, setProfile] = useState({});
     const [full_name, setFullName] = useState('');
-    const user_id = sessionStorage.getItem('user_id');
-    const account_type = sessionStorage.getItem('account_type');
+    const user_id = useSelector(state=>state.user.id);
+    const account_type = useSelector(state=>state.user.account_type);
     const [index, setIndex] = useState(0);
-    const [load, setLoad] = useState(true);
+    const [load, setLoad] = useState(false);
     const updateProfile = async () => {
         let data = {
             full_name:full_name,
@@ -46,22 +46,25 @@ export default function EditProfile() {
     useEffect(() => {
         let isMounted = true;
         const data = {
-            user_id:user_id
+            'user_id':user_id
         }
-        GetProfile(data)
-            .then(response => {
-                console.log('profile data', response);
-                if(isMounted) {
-                    setFullName(response.full_name);
-                    setProfile(response.profile);
-                    let index = CountryMenu.map(item => item).indexOf(response.profile.country);
-                    setIndex(index);
-                    setLoad(false);
-                }
-            })
-            .catch(error => console.log(error));
+        if (user_id) {
+            setLoad(true);
+            GetProfile(data)
+                .then(response => {
+                    // console.log('profile data', response);
+                    if(isMounted) {
+                        setFullName(response.full_name);
+                        setProfile(response.profile);
+                        let index = CountryMenu.map(item => item).indexOf(response.profile.country);
+                        setIndex(index);
+                        setLoad(false);
+                    }
+                })
+                .catch(error => console.log(error));
+        }
         return () => { isMounted = false};
-    },[]);
+    },[user_id]);
 
     return (
         <>
@@ -70,7 +73,7 @@ export default function EditProfile() {
                 <Cover viewID={user_id}/>
             </div>
             <div className='avatar_container'>
-                <EditableAvatar viewID={user_id} />
+                <EditableAvatar setLoad={setLoad} />
             </div>
             <p style={{fontSize: '1rem',fontWeight: 700,}}>{full_name}</p>
             <div className='px-2 text-left mb-14'>

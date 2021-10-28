@@ -1,12 +1,13 @@
 import * as ActionTypes from '../ActionTypes';
 
 const initState = {
-    userInfo:
-        {
-            unread_inbox:'',
-            unread_request:'',
-            unread_total:'',
-        }
+    id:'',
+    email:'',
+    account_type:'',
+    unread:'',
+    full_name:'',
+    name:'',
+    active:'',
 
 }
 
@@ -15,28 +16,34 @@ const UserReducer = (state = initState, action) => {
         return { ...state }
     switch (action.type) {
         case ActionTypes.UPDATE_USER_INFO:
-            if (Array.isArray(action.res)) {
-                let new_userInfo = state.userInfo;
-                action.res.map(item => {
-                    new_userInfo = {
-                        ...new_userInfo,
-                        [item.id]:item.value
-                    }
-                    return null;
-                })
+            Object.entries(action.res).map(([key, value]) => {
                 return {
                     ...state,
-                    userInfo:new_userInfo
+                    [key]:value
                 }
+            });
+
+        case ActionTypes.GET_USER_INFO:
+            return {
+                ...state,
+                id:action.res.user_info.id,
+                email:action.res.user_info.email,
+                full_name:action.res.user_info.full_name,
+                name:action.res.user_info.name,
+                active:action.res.user_info.active,
+                account_type:action.res.user_info.account_type,
+
+                unread:action.res.unread,
             }
-            else {
-                return {
-                    ...state,
-                    userInfo: {
-                        ...state.userInfo,
-                        [action.res.id]:action.res.value
-                    }
-                }
+        case ActionTypes.ADD_UNREAD:
+            return {
+                ...state,
+                unread:state.unread + action.res,
+            }
+        case ActionTypes.DISCOUNT_UNREAD:
+            return {
+                ...state,
+                unread:state.unread - action.res.count,
             }
         
         default:

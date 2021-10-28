@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import {useSelector} from 'react-redux';
+import {useHistory, useParams} from "react-router-dom";
 import GalleryView from '../layouts/profile/GalleryView';
 import AvatarView from '../layouts/profile/AvatarView';
 import RatingMark from '../layouts/profile/RatingMark';
 import Cover from '../layouts/editprofile/Cover';
 import Button from '@mui/material/Button';
 import {GetProfile} from '../services/ProfileService';
-import {useHistory, useParams} from "react-router-dom";
 import {useStyles} from '../styles/Styles';
 import LoadingSignModal from '../modal/LoadingSignModal';
 import Chip from '@mui/material/Chip';
@@ -20,13 +21,13 @@ export default function Profile(props) {
     const [inCallPrice, setIncallPrice] = useState({});
     const [outCallPrice, setOutCallPrice] = useState({});
     const [services, setServices] = useState([]);
-    const [load, setLoad] = useState(true);
-    const account_type = sessionStorage.getItem('account_type');
-    const user_id = sessionStorage.getItem('user_id');
+    const [load, setLoad] = useState(false);
+    const [account_type, setAccountType] = useState('');
+    const user_id = useSelector(state => state.user.id);
     const [rating, setRating] = useState(5);
     
     const handleClick = () => {
-        if (viewID == user_id) {
+        if (viewID == userInfo.id) {
             history.push('/editprofile');
         }
         else history.push(`/collaborate/${viewID}`);
@@ -37,13 +38,15 @@ export default function Profile(props) {
         const data = {
             user_id:viewID
         }
+        setLoad(true);
         GetProfile(data)
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 if (isMounted) {
                     setFullName(response.full_name);
                     setRating(response.rating);
                     setProfile(response.profile);
+                    setAccountType(response.account_type);
                     let incall = response.profile.incall_price;
                     if (incall) setIncallPrice(JSON.parse(incall));
                     else setIncallPrice({});
@@ -226,7 +229,7 @@ export default function Profile(props) {
                 <p className='font-default text-left font-semibold text-base'>About Me</p>
                 <p style={{border:'1px solid gray'}} className='font-default w-full h-40  text-left rounded-xl p-2'>{profile.bio}</p>
                 {account_type=='escort' &&
-                    <GalleryView viewID={user_id} />
+                    <GalleryView viewID={viewID} />
                 }
             </div>
             <div className={'w-full mx-auto bg-white fixed flex items-center justify-center '} style={{zIndex:'100',bottom:'0',height:'3rem',}}>
@@ -238,7 +241,7 @@ export default function Profile(props) {
                     onClick={() => handleClick()}
                     classes={{root:classes.button}}
 
-                ><span className={'base font-semibold'}>{viewID==user_id?'Edit':`Book ${fullName} Now`}</span>
+                ><span className={'base font-semibold'}>{viewID == user_id?'Edit':`Book ${fullName} Now`}</span>
                 </Button>
             </div>
         </>

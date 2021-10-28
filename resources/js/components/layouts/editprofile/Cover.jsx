@@ -19,7 +19,7 @@ export default function Cover(props) {
     const {viewID} = props;
     const classes = useStyles();
     const history = useHistory();
-    const user_id = sessionStorage.getItem('user_id');
+    const user_id = useSelector(state=>state.user.id);
     const [url, setUrl] = useState('');
     const [update, setUpdate] = useState(true);
     const [open, setOpen] = useState(false);
@@ -65,14 +65,15 @@ export default function Cover(props) {
     }
 
     useEffect(()=> {
-
-        const data = {
-            user_id:viewID,
+        if (viewID) {
+            const data = {
+                user_id:viewID,
+            }
+            GetProfileImages(data)
+                .then(response => {
+                    setUrl(response.images.cover);
+                });
         }
-        GetProfileImages(data)
-            .then(response => {
-                setUrl(response.images.cover);
-            });
     }, [viewID]);
 
 return (

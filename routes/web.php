@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/home', 'App\Http\Controllers\HomeController@index');
+
 // profile api
 Route::post('/profile/get', 'App\Http\Controllers\ProfileController@getProfile');
 Route::post('/profile/update', 'App\Http\Controllers\ProfileController@update');
@@ -44,6 +46,7 @@ Route::get('/account/unread', 'App\Http\Controllers\AccountController@unread');
 // chat api
 Route::post('/chat/get', 'App\Http\Controllers\ChatController@get');
 Route::post('/chat/save', 'App\Http\Controllers\ChatController@save');
+Route::post('/chat/update', 'App\Http\Controllers\ChatController@update');
 
 // inbox api
 Route::get('/inbox/get', 'App\Http\Controllers\InboxController@get');
@@ -59,11 +62,11 @@ Route::get('/role/update', 'App\Http\Controllers\RoleController@update');
 
 
 
-// Route::middleware('auth')->get('/{any}', 'App\Http\Controllers\HomeController@index')->where('any', '.*');
+Route::middleware('auth')->get('/{any}', 'App\Http\Controllers\HomeController@index');
 
-Route::middleware('auth')->get('/{any}', function() {
-    return view('home');
-})->where('any', '.*');
+// Route::middleware('auth')->get('/{any}', function() {
+//     return view('home');
+// })->where('any', '.*');
 
 
 

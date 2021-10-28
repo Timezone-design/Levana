@@ -7,16 +7,17 @@ import ImageCropper from './ImageCropper';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {useSelector} from 'react-redux';
 
 export default function EditableAvatar(props) {
     
-    const {viewID} = props;
+    const {setLoad} = props;
     const classes = useStyles();
     const [url, setUrl] = useState('');
     const [open, setOpen] = useState(false);
     const [sourceimage, setSourceImgage] = useState('');
     const [cropsource, setCropSource] = useState('');
-
+    const user_id = useSelector(state => state.user.id);
     const handleClose = () => {
         setOpen(false);
     }
@@ -25,6 +26,7 @@ export default function EditableAvatar(props) {
     }
     const handlecrop = (cropsource) => {
         if (cropsource) {
+            setLoad(true);
             const data = {
                 base64: cropsource,
                 type: 'avatar'
@@ -33,6 +35,7 @@ export default function EditableAvatar(props) {
                 .then( response => {
                         setUrl(response.profile.avatar);
                         setOpen(false);
+                        setLoad(false);
                 });
         }
     }
@@ -55,16 +58,16 @@ export default function EditableAvatar(props) {
     }
     
     useEffect(()=> {
-        if (viewID) {
+        if (user_id) {
             const data = {
-                user_id:viewID
+                'user_id':user_id
             }
             GetProfileImages(data)
             .then(response => {
                     setUrl(response.images.avatar);
             });
         }
-    }, [viewID]);
+    }, [user_id]);
 
 return (
     <>

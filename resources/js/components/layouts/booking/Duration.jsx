@@ -4,7 +4,8 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import * as ActionTypes from '../../redux/ActionTypes';
 
-const Duration = () => {
+
+export default function Duration() {
     const dispatch = useDispatch();
     const detail = useSelector(state => state.booking.detail);
         // console.log(detail);
@@ -104,4 +105,3 @@ const Duration = () => {
     )
 }
 
-export default Duration;

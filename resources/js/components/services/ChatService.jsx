@@ -22,3 +22,13 @@ export const SendMessage = async (data) => {
         })
 }
 
+export const UpdateUnread = async (data) => {
+    return await axios.post('/chat/update', data)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            console.log('saving chat info',error);
+        })
+}
+

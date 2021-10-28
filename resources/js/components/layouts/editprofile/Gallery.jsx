@@ -20,7 +20,7 @@ export default function Gallery(props) {
     const {setLoad} = props;
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-    const user_id = sessionStorage.getItem('user_id');
+    const user_id = useSelector(state=>state.user.id);
     const [freePhoto, setFreePhoto] = useState([]);
     const [freeVideo, setFreeVideo] = useState([]);
     const [pricePhoto, setPricePhoto] = useState([]);

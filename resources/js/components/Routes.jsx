@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Switch, Route, withRouter} from "react-router-dom";
 import {ThemeProvider} from '@mui/material/styles';
 import Booking from './pages/Booking';
@@ -15,6 +15,7 @@ import Payment from './pages/Payment';
 import { theme } from './styles/Styles';
 
 function Routes() {
+
     return(
         <ThemeProvider theme={theme}>
             <Switch>

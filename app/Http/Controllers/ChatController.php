@@ -75,7 +75,7 @@ class ChatController extends Controller
 
     public function update(Request $request) {
         $booking_id = $request->booking_id;
-        $user_id = $request->user_id;
+        $user_id = Auth::id();
         try {
             $records = Chat::where('booking_id', $booking_id)
                         ->where('receiver_id', $user_id)
@@ -87,7 +87,7 @@ class ChatController extends Controller
                 ]);
             }
             return response() -> json([
-                'records' => $records,
+                'count' => count($records),
                 'success' => true
             ]);
         }

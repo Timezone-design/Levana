@@ -46,7 +46,7 @@
     right: 0;
     bottom: 0;
     background: #000000d1;
-    z-index: 1000;
+    z-index: 1500;
 }
 #levana_modal{
     position: absolute;

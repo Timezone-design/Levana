@@ -28,6 +28,7 @@ class ProfileController extends Controller
         $rating = Rating::where('user_id', $user_id)->first();
         return response()->json([
             'full_name' => $user->full_name,
+            'account_type' => $user->account_type,
             'profile' => $profile,
             'rating' => $rating->rating,
         ]);

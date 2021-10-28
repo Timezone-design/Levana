@@ -7,7 +7,7 @@ import {useStyles} from '../../styles/Styles';
 import * as ActionTypes from '../../redux/ActionTypes';
 
 
-export default function Location() {
+export default function Location () {
     
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -16,7 +16,6 @@ export default function Location() {
     const [subMenu, setSubMenu] = useState(CityMenu[0]);
     const [countrySelected, setCountrySelected] = useState(detail.country);
     const [citySelected, setCitySelected] = useState(detail.city);
-    console.log(detail);
     const selectCountry = (item, index) => {
         setCountrySelected(item);
         setSubMenu(CityMenu[index]);

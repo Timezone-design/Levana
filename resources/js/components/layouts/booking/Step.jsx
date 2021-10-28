@@ -6,7 +6,7 @@ import moment from 'moment';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
-const Step = () => {
+export default function Step() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const index = useSelector(state=>state.booking.index);
@@ -60,5 +60,3 @@ const Step = () => {
         </Box>
     )
 }
-
-export default Step;

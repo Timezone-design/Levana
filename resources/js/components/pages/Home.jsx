@@ -14,6 +14,8 @@ import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import LoadingSignModal from '../modal/LoadingSignModal';
 import Header from '../layouts/home/Header';
 import {GetUserInfo} from '../services/AccountService';
+import {GetUserInfoAction} from '../redux/actions/UserAction';
+
 
 import WcIcon from '@mui/icons-material/Wc';
 
@@ -23,24 +25,22 @@ export default function Home() {
     const dispatch = useDispatch();
     const history = useHistory();
     // const [load, setLoad] = useState(true);
-    const [fullName, setFullName] = useState('');
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
-    const [id, setID] = useState('');
-    const user_id = sessionStorage.getItem('user_id');
     const [update, setUpdate] = useState(false);
+    const full_name = useSelector(state => state.user.full_name);
+    const user_id = useSelector(state => state.user.id);
+    const index = useSelector(state => state.booking.index);
+    const filter = useSelector(state => state.search.filter);
+    console.log('index', index);
+    console.log('full_name', full_name);
+    console.log('user_id', user_id);
+    console.log('filter', filter);
+
     useEffect(() => {
-        let isMounted = true;
-        GetUserInfo().then(response => {
-            if (isMounted) {
-                let user_id = response.user_info.id;
-                sessionStorage.setItem('user_id', user_id);
-                sessionStorage.setItem('account_type', response.user_info.account_type);
-                setUpdate(!update);
-            }
-        });
-        return () => { isMounted = false};
+        dispatch(GetUserInfoAction());
     },[]);
+
     useEffect(() => {
         let isMounted = true;
         if (user_id) {
@@ -50,8 +50,7 @@ export default function Home() {
             GetProfile(data)
                 .then(response => {
                     if (isMounted) {
-                        console.log('profile data', response);
-                        setFullName(response.full_name);
+                        // console.log('profile data', response);
                         setCountry(response.profile.country);
                         setCity(response.profile.city);
                         // setLoad(false);
@@ -68,7 +67,7 @@ export default function Home() {
             <Header headline='DASHBOARD'/>
             <div className='m-4'>
                 <AvatarView viewID={user_id} />
-                <p className={classes.subTitle}>{fullName?fullName:'Your Name'}</p>
+                <p className={classes.subTitle}>{full_name}</p>
                 <p style={{color:'#818181'}} >{city?city:'Unkown'}, {country?country:'Unknown'}</p>
 
             </div>
@@ -96,7 +95,7 @@ export default function Home() {
                         <MailOutlineIcon/>
                     </div>
                     <div className='title_container'>
-                        <p className='dash_title'>Inbox</p>
+                        <p className='dash_title'>Message</p>
                     </div>
                 </div>
                 <div className='dashboard_item' onClick={(e) => history.push('/booking')} >

@@ -9,10 +9,9 @@ import PortFolioView from '../../layouts/booking/PortFolioView';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import * as ActionTypes from '../../redux/ActionTypes';
 import RatingMark from '../../layouts/profile/RatingMark';
-import LoadingSignModal from '../../modal/LoadingSignModal';
 
 export default function EscortView(props) {
-    const [load, setLoad] = useState(true);
+    const {setLoad} = props;
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -27,6 +26,7 @@ export default function EscortView(props) {
         const data = {
             user_id:detail.id
         }
+        setLoad(true);
         GetProfile(data)
             .then(response => {
                 if (isMounted) {

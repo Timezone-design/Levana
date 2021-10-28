@@ -12,6 +12,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {GetChatRecord, SendMessage} from '../services/ChatService';
 import IconButton from '@mui/material/IconButton';
 import moment from 'moment';
+import {DiscountUnreadAction,AddUnreadAction} from '../redux/actions/UserAction';
 
 export default function Chat(props) {
 
@@ -19,7 +20,7 @@ export default function Chat(props) {
     const history = useHistory();
     const dispatch = useDispatch();
     const { booking_id } = useParams();
-    const user1_id = sessionStorage.getItem('user_id');
+    const user1_id = useSelector(state=>state.user.id);
     const [user2_id, setUser2ID] = useState();
     const [user2_name, setUser2Name] = useState();
     const [records, setRecords] = useState([]);
@@ -29,6 +30,12 @@ export default function Chat(props) {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
     const elem = useRef(null);
+    const updateUnread = () => {
+        let data = {
+            'booking_id':booking_id
+        }
+        dispatch(DiscountUnreadAction());
+    }
 
     const sendMessage = () => {
         let msg = input.current.value;
@@ -95,7 +102,11 @@ export default function Chat(props) {
             console.log(data);
             if (data.booking_id == booking_id && isPusher) {
                 console.log('getting pusher data');
+                // update chat records
                 setRecords([...records, data]);
+                // update unread
+                let res = 1;
+                dispatch(AddUnreadAction(res));
             }
         });
         return () => {
@@ -144,7 +155,7 @@ export default function Chat(props) {
                     </label>
                 </div>
                 <div className='h-full p-2 w-9/12'>
-                    <input ref={input} placeholder='Text your Message...' className='w-full h-full focus:outline-none bg-white' />
+                    <input onClick={() => updateUnread()} ref={input} placeholder='Text your Message...' className='w-full h-full focus:outline-none bg-white' />
                 </div>
                 <div className='w-2/12 bg-yellow-500 h-full pl-2 flex align-items-center justify-content-center'>
                     <div onClick={(e) => sendMessage()} className='transform -rotate-45'><SendIcon color='primary' /></div>

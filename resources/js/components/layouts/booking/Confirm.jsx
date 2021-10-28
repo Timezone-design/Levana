@@ -8,19 +8,19 @@ import { BookingBackAction, } from "../../redux/actions/BookingActions";
 import {SendBookingRequest} from '../../services/BookingService';
 import {GetProfileImages} from '../../services/ProfileService';
 import AlertModal from '../../modal/AlertModal';
-import LoadingSignModal from '../../modal/LoadingSignModal';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 
 
 export default function Confirm(props) {
-    const [load, setLoad] = useState(true);
+    const {setLoad} = props;
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
     const detail = useSelector(state => state.booking.detail);
     const index = useSelector(state => state.booking.index);
+    const user_id = useSelector(state => state.user.id);
     const [avatar, setAvatar] = useState('');
-    const user_id = sessionStorage.getItem('user_id');
     const name = useRef(null);
     const email = useRef(null);
     const hotel = useRef(null);
@@ -31,7 +31,11 @@ export default function Confirm(props) {
     const [title, setTitle] = useState('');
     const closeAlert = () => {
         if (title =='Booking Successfully Completed!') {
-            history.push('/home');
+            const res = {
+                'index': 0
+            };
+            dispatch({type: ActionTypes.BOOKING_NEXT, res});
+            history.push('/booking');
         }
         else setAlert(false);
         
@@ -48,6 +52,7 @@ export default function Confirm(props) {
             const data = {
                 user_id:detail.id
             }
+            setLoad(true);
             GetProfileImages(data)
                 .then(response => {
                     if(isMounted) {

@@ -5,18 +5,22 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useStyles} from '../../styles/Styles';
 import { useDispatch, useSelector } from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 export default function BookingHeader() {
     const dispatch = useDispatch();
     const history = useHistory();
     const classes = useStyles();
-    const index = useSelector(state=>state.booking.index);
-    const detail = useSelector(state=>state.booking.detail);
-    console.log(detail);
-    const headers = ['Book escort in ...', 'Select Gender', 'Select time', 'Select duration', (detail.count>1? detail.count+' escorts':detail.count+' escort'), detail.full_name,'Confirm Booking'];
+    const index = useSelector(state => state.booking.index);
+    const detail = useSelector(state => state.booking.detail);
+    const headers = ['Book escort in ...', 'Select Gender', 'Select time', 'Select duration', (detail.count>0?(detail.count>1? detail.count+' escorts':detail.count+' escort'):'no escort'), detail.full_name,'Confirm Booking'];
 
-    const logOut = (e) => {
-        e.preventDefault();
+    const cancel = (e) => {
+
+        let res = {
+            'index':0
+        }
+        dispatch({type:ActionTypes.BOOKING_NEXT, res});
     }
 
     return (
@@ -26,7 +30,7 @@ export default function BookingHeader() {
                 <Toolbar>
                     <Grid container justifyContent="space-between" alignItems="center">
                         <Grid item>
-                            <IconButton color='secondary' onClick={() => {window.location.href="/home";}}>
+                            <IconButton color='secondary' onClick={(e) => cancel(e)}>
                                 <ArrowBackIcon />
                             </IconButton>
                         </Grid>
@@ -36,7 +40,7 @@ export default function BookingHeader() {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <IconButton color='secondary' onClick={() => logOut()}>
+                            <IconButton color='secondary' onClick={(e) => history.push('/home')}>
                                 <CloseIcon />
                             </IconButton>
                         </Grid>

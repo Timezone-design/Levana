@@ -12,7 +12,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 export default function Gallery(props) {
     const {viewID} = props;
     const classes = useStyles();
-    const user_id = sessionStorage.getItem('user_id');
+    const user_id = useSelector(state => state.user.id);
     const [freePhoto, setFreePhoto] = useState([]);
     const [freeVideo, setFreeVideo] = useState([]);
     const [pricePhoto, setPricePhoto] = useState([]);

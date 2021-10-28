@@ -16,8 +16,13 @@ class AccountController extends Controller
 {
     public function get() {
         $user = User::find(Auth::id()); 
+        $count = Chat::where('receiver_id', Auth::id())
+                    ->where('read', 0)
+                    ->count();
+
         return response()->json([
             'user_info' => $user,
+            'unread' => $count
         ]);
     }
 

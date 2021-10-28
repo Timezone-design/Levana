@@ -3,6 +3,9 @@ export const CODE_ERROR = "CODE_ERROR";
 
 // UserReducer
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
+export const GET_USER_INFO = "GET_USER_INFO";
+export const ADD_UNREAD = "ADD_UNREAD";
+export const DISCOUNT_UNREAD = "DISCOUNT_UNREAD";
 
 // BookingReducer
 export const BOOKING_NEXT = "BOOKING_NEXT";

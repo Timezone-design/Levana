@@ -18,15 +18,25 @@ class InboxController extends Controller
         try {
             $booking = new Booking();
             $inboxes = $booking->getInbox($user);
+            $total_unread = 0;
             foreach ($inboxes as $inbox) {
                 $last_chat = Chat::where('booking_id', $inbox->booking_id)
                             ->orderBy('updated_at', 'desc')
                             ->first();
                 if ($last_chat)
                 $inbox->last_msg = $last_chat->content;
+
+                // count unread chat record
+                $unread = Chat::where('booking_id', $inbox->booking_id)
+                                ->where('receiver_id', Auth::id())
+                                ->where('read', false)
+                                ->count();
+                $inbox->unread = $unread;
+                $total_unread = $total_unread + $unread;
             }
             return response()->json([
                 'inbox' => $inboxes,
+                'total_unread' => $total_unread,
             ]);
         }
         catch (Illuminate\Database\QueryException $ex) {

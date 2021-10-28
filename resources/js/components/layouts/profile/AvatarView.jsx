@@ -12,15 +12,18 @@ export default function AvatarView(props) {
     const [active, setActive] = useState(true);
 
     useEffect(()=> {
+        let isMounted = true;
         if (viewID) {
             const data = {
                 user_id:viewID
             }
             GetProfileImages(data)
             .then(response => {
+                if(isMounted)
                     setUrl(response.images.avatar);
             });
         }
+        return () => {isMounted = false};
     }, [viewID]);
 
     return (

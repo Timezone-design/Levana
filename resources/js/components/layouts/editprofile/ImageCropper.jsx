@@ -29,7 +29,7 @@ export default function ImageCropper(props) {
                 <img ref={imageElement} src={src} alt="Source" crossOrigin="true" className="mx-auto"
                 />
             </div>
-            <img src={canvassource} className="mx-auto" alt="Destination" style={{ width: '200px', height: '200px', border: '5px dashed #ff2484' }} />
+            <img src={canvassource} className="mx-auto" alt="Destination" style={{ width: '200px', height: '200px', border: '5px dashed #f59e0b' }} />
         </div>
     )
 

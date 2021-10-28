@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useStyles } from '../styles/Styles';
 import Header from '../layouts/home/Header';
-import {GetUserInfo,UpdateAccountInfo,DeleteAccount} from '../services/AccountService';
+import {UpdateAccountInfo,DeleteAccount} from '../services/AccountService';
 import {Button} from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AlertModal from '../modal/AlertModal';
 import ConfirmModal from '../modal/ConfirmModal';
 import BottomNav from '../layouts/home/BottomNav';
+import {useSelector} from 'react-redux';
 
 export default function AccountSetting() {
 
     const classes = useStyles();
-    const user_id = sessionStorage.getItem('user_id');
+    const old_email = useSelector(state=>state.user.email);
+    const user_id = useSelector(state=>state.user.id);
 
     const email = useRef(null);
     const old = useRef(null);
@@ -70,13 +72,6 @@ export default function AccountSetting() {
         DeleteAccount();
         window.location.href = '/';
     }
-    useEffect(() => {
-        GetUserInfo().then(response => {
-            console.log(response);
-            email.current.value = response.user_info.email;
-            setOldPassWord(response.user_info.password);
-        });
-    },[]);
     
     return (
         <>
@@ -86,7 +81,7 @@ export default function AccountSetting() {
             <div className='my-12 px-3 w-full mx-auto space-y-3 text-left text-base'>
                 <div className='w-full '>
                     <p>Email</p>
-                    <input className='w-full border rounded-sm px-2 py-1 focus:outline-none' ref={email} type='email' />
+                    <input className='w-full border rounded-sm px-2 py-1 focus:outline-none' defaultValue={old_email} ref={email} type='email' />
                     <p className='text-red-500'>{emailError}</p>
                 </div>
                 <div className='w-full '>
