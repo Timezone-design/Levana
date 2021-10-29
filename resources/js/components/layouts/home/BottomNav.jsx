@@ -67,7 +67,7 @@ export default function BottomNav() {
                                             } 
                                         onClick={() => history.push('/message')} />
                 <BottomNavigationAction value="favourite" 
-                                        onClick={() => history.push('/favorite')}
+                                     
                                         icon={<FavoriteIcon color="secondary"/>} />
                 <BottomNavigationAction value="search" 
                                         onClick={() => history.push('/search')}

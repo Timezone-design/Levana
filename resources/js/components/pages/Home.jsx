@@ -99,7 +99,7 @@ export default function Home() {
                     </div>
 
                 </div>
-                <div className='dashboard_item' onClick={(e) => history.push('/favorite')} >
+                <div className='dashboard_item'  >
                     <div className='icon_container'>
                         <FavoriteBorderIcon/>
                     </div>

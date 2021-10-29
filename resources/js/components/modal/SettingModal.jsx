@@ -48,7 +48,7 @@ export default function Confirm(props) {
                                 Message
                             </div>
                         </div>
-                        <div className='setting_item' onClick={() => history.push('/favorite')} >
+                        <div className='setting_item'   >
                             <div className='icon'>
                                 <FavoriteIcon color='secondary'/>                                
                             </div>

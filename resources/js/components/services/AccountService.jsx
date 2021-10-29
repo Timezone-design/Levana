@@ -39,26 +39,3 @@ export const GetUnRead = async () => {
             console.log('unread',error);
         })
 }
-
-
-async function getUserInfo() {
-    const result = await axios.get('/getUserInfo')
-        .then(response => {
-            return response.data;
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    return result;
-}
-
-async function getMessgeCount(users) {
-    const result = await axios.post('/getMessgeCount', users)
-        .then(response => {
-            return response.data;
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    return result;
-}

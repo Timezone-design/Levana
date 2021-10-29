@@ -30,6 +30,12 @@ export default function Search() {
                 console.log(response);
             });
 	}
+	const handleClick = (index) => {
+		if(index < 3) 
+			setTabIndex(index + 1);
+		else 
+			setTabIndex(0);
+	}
 
 	return (
 		<>
@@ -61,7 +67,8 @@ export default function Search() {
 				{tabIndex==3 &&
 					<Location />
 				}
-				<button className='rounded mx-auto w-3/12 bg-gray-400 text-white p-1'>Next</button>
+				<button onClick={() => handleClick(tabIndex)} 
+					className='rounded mx-auto w-3/12 bg-gray-400 text-white p-1'>Next</button>
 			</div>
 			{tabIndex<3 &&
 				<Button
