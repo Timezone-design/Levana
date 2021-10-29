@@ -30,13 +30,10 @@ class BookingController extends Controller
     }
 
     public function update( Request $request) {
-        $booking_id = $request->booking_id;
-        $status = $request->status;
+        $input = $request->all();
         try {
-            $booking = Booking::findOrFail($booking_id);
-            $booking->update([
-                'status' => $status,
-            ]);
+            $booking = Booking::findOrFail($input['id']);
+            $booking->update($input);
             return response() -> json([
                 'booking' => $booking,
                 'success' => true,

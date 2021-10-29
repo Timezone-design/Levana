@@ -19,28 +19,22 @@ class RequestController extends Controller
             $requests = $booking->getRequest($user);
             $total_unread = 0;
             foreach ($requests as $request) {
-                $last_chat = Chat::where('booking_id', $request->booking_id)
+                $last_chat = Chat::where('booking_id', $request->id)
                             ->orderBy('updated_at', 'desc')
                             ->first();
                 if ($last_chat)
                 $request->last_msg = $last_chat->content;
                 else
                     $request->last_msg = "I'd like to book you.";
-                $unread_booking = Booking::where('booking_id', $request->booking_id)
-                                    ->where('escort_id', Auth::id())
-                                    ->where('escort_read', false)
-                                    ->count();
-                if ($unread_booking) {
-                    $request->unread = 1;
+                $count = Chat::where('booking_id', $request->id)
+                            ->where('receiver_id', Auth::id())
+                            ->count();
+                $request->unread = $count;
+                $total_unread = $total_unread + $count;
+
+                 // check booking read 
+                if(!$request->booking_read) 
                     $total_unread++;
-                }
-                else {
-                    $count = Chat::where('booking_id', $request->booking_id)
-                                ->where('receiver_id', Auth::id())
-                                ->count();
-                    $request->unread = $count;
-                    $total_unread = $total_unread + $count;
-                }
             }
             return response()->json([
                 'request' => $requests,

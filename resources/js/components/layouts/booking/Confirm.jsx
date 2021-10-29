@@ -99,7 +99,6 @@ export default function Confirm(props) {
 
     return (
         <>  
-            <LoadingSignModal isOpen={load} />
             <AlertModal isOpen={alert} cancelModal={closeAlert} title={title}/>
             <div className='font-default w-full mx-auto px-2 space-y-4 text-left'>
                 <div className='my-2 w-full bg-yellow-100 flex align-items-center justify-start p-2 rounded-xl'>

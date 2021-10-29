@@ -70,7 +70,6 @@ export default function EscortView(props) {
 
     return (
         <>
-            <LoadingSignModal isOpen={load} />
             <PortFolioView viewID={detail.id} />
             <div className='w-full px-2 mx-auto space-y-3 m-3'>
                 <Button
@@ -78,7 +77,7 @@ export default function EscortView(props) {
                     fullWidth={true}
                     color="primary"
                     size="large"
-                    onClick={() => history.push('https://facebook.com')}
+                    onClick={() => window.location.href='https://facebook.com'}
                     endIcon={<ShareIcon/>}
                 >Share {detail.full_name} Profile
                 </Button>

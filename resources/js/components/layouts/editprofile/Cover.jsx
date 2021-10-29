@@ -40,7 +40,7 @@ export default function Cover(props) {
             }
             UploadMedia(data)
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 setUrl(response.profile.cover);
                 setOpen(false);
             });

@@ -17,9 +17,9 @@ import LoadingSignModal from '../modal/LoadingSignModal';
 export default function Booking() {
     const [load, setLoad] = useState(false);
     const index = useSelector(state => state.booking.index);
+    const user_id = useSelector(state => state.user.id);
     const components = [Location, Gender, Time, Duration, Result, EscortView, Confirm];
     const Body = components[index];
-    console.log('index', index, 'index');
     return (
         <>
             <LoadingSignModal isOpen={load} />

@@ -11,11 +11,14 @@ import Account from './pages/Account';
 import Search from './pages/Search';
 import Membership from './pages/Membership';
 import Payment from './pages/Payment';
+import {GetUserInfoAction} from './redux/actions/UserAction';
+import { useDispatch} from 'react-redux';
 
 import { theme } from './styles/Styles';
 
-function Routes() {
-
+export default function Routes() {
+    const dispatch = useDispatch();
+    dispatch(GetUserInfoAction());
     return(
         <ThemeProvider theme={theme}>
             <Switch>
@@ -35,4 +38,4 @@ function Routes() {
     )
 }
 
-export default withRouter(Routes);
+// export default withRouter(Routes);

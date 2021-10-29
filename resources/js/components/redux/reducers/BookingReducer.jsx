@@ -17,7 +17,7 @@ const initState = {
     },
 }
 
-const BookingReducer = (state = initState, action) => {
+export default function BookingReducer (state = initState, action) {
     if(action.res === undefined)
         return { ...state }
     switch (action.type) {
@@ -57,10 +57,8 @@ const BookingReducer = (state = initState, action) => {
             }
             
         default:
-            return {
-               state
-            }
+            return state;
     }
 }
 
-export default BookingReducer;
+// export default BookingReducer;

@@ -20,6 +20,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index');
+Route::get('/editprofile', 'App\Http\Controllers\HomeController@index');
+Route::get('/profile/{any}', 'App\Http\Controllers\HomeController@index');
+Route::get('/chat/{any}', 'App\Http\Controllers\HomeController@index');
+
 
 // profile api
 Route::post('/profile/get', 'App\Http\Controllers\ProfileController@getProfile');
@@ -36,6 +40,7 @@ Route::post('/search/favorite', 'App\Http\Controllers\SearchController@getFavori
 // booking api
 Route::post('/booking/save', 'App\Http\Controllers\BookingController@save');
 Route::post('/booking/get', 'App\Http\Controllers\BookingController@get');
+Route::post('/booking/update', 'App\Http\Controllers\BookingController@update');
 
 // account info api
 Route::get('/account/get', 'App\Http\Controllers\AccountController@get');

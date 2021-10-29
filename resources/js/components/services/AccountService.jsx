@@ -11,7 +11,7 @@ export const GetUserInfo = async () => {
 }
 
 export const UpdateAccountInfo = async (data) => {
-    return await axios.post('/account/update')
+    return await axios.post('/account/update', data)
         .then(response => {
             return response.data;
         })

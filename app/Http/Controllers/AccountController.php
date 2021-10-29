@@ -16,33 +16,44 @@ class AccountController extends Controller
 {
     public function get() {
         $user = User::find(Auth::id()); 
-        $count = Chat::where('receiver_id', Auth::id())
+        $chat_unread = Chat::where('receiver_id', Auth::id())
                     ->where('read', 0)
                     ->count();
+        if($user->account_type == 'escort')
+            $booking_unread = Booking::where('escort_id', Auth::id())
+                                    ->where('escort_read', 0)
+                                    ->count();
+        else
+            $booking_unread = Booking::where('client_id', Auth::id())
+                                    ->where('client_read', 0)
+                                    ->count();
 
         return response()->json([
             'user_info' => $user,
-            'unread' => $count
+            'unread' => $chat_unread + $booking_unread,
         ]);
     }
 
     public function update( Request $request) {
-        
-        $user = User::find(Auth::id()); 
-        $old_password = Hash::make($request['old_password']);
-        $new_password = $request['new_password'];
+        $input = $request->all();
 
-        if ($user->password == $old_password) {
+        $user = User::find(Auth::id()); 
+        $old_password = $input['old_password'];
+        $new_password = $input['new_password'];
+        $password = $user->password;
+
+        if(Hash::check($old_password, $password)) {
             $user->password = Hash::make($new_password);
             $user->save();
             return response()->json([
                 'success' => true,
             ]);
-        }
-        else 
+        } 
+        else {
             return response()->json([
                 'success' => false,
             ]);
+        }
     }
 
     public function delete() {

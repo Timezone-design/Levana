@@ -4,7 +4,7 @@ const initState = {
     id:'',
     email:'',
     account_type:'',
-    unread:'',
+    unread:0,
     full_name:'',
     name:'',
     active:'',
@@ -47,9 +47,7 @@ const UserReducer = (state = initState, action) => {
             }
         
         default:
-            return {
-               state
-            }
+            return state;
     }
 }
 

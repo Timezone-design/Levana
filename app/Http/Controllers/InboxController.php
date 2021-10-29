@@ -20,19 +20,23 @@ class InboxController extends Controller
             $inboxes = $booking->getInbox($user);
             $total_unread = 0;
             foreach ($inboxes as $inbox) {
-                $last_chat = Chat::where('booking_id', $inbox->booking_id)
+                $last_chat = Chat::where('booking_id', $inbox->id)
                             ->orderBy('updated_at', 'desc')
                             ->first();
                 if ($last_chat)
                 $inbox->last_msg = $last_chat->content;
 
                 // count unread chat record
-                $unread = Chat::where('booking_id', $inbox->booking_id)
+                $unread = Chat::where('booking_id', $inbox->id)
                                 ->where('receiver_id', Auth::id())
                                 ->where('read', false)
                                 ->count();
                 $inbox->unread = $unread;
                 $total_unread = $total_unread + $unread;
+
+                // check booking read 
+                if(!$inbox->booking_read) 
+                    $total_unread++;
             }
             return response()->json([
                 'inbox' => $inboxes,

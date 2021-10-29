@@ -79,7 +79,7 @@ class ChatController extends Controller
         try {
             $records = Chat::where('booking_id', $booking_id)
                         ->where('receiver_id', $user_id)
-                        ->where('unread', 0)
+                        ->where('read', 0)
                         ->get();
             foreach ($records as $record) {
                 $record->update([

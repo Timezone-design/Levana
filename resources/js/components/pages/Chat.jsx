@@ -34,7 +34,7 @@ export default function Chat(props) {
         let data = {
             'booking_id':booking_id
         }
-        dispatch(DiscountUnreadAction());
+        dispatch(DiscountUnreadAction(data));
     }
 
     const sendMessage = () => {

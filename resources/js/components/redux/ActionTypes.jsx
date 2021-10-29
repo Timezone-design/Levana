@@ -1,6 +1,3 @@
-export const CODE_ERROR = "CODE_ERROR";
-
-
 // UserReducer
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 export const GET_USER_INFO = "GET_USER_INFO";
@@ -14,5 +11,8 @@ export const UPDATE_BOOKING_DETAIL = "UPDATE_BOOKING_DETAIL";
 
 // SearchReducer
 export const UPDATE_SEARCH_FILTER = "UPDATE_SEARCH_FILTER";
+
+
+export const CODE_ERROR = "CODE_ERROR";
 
 

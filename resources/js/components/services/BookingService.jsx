@@ -23,4 +23,14 @@ export const getBooks = async () => {
 }
 
 
+export const UpdateBooking = async (data) => {
+    return await axios.post('/booking/update', data)
+        .then(response => {
+            console.log('update booking info', response);
+            return response.data;
+        })
+        .catch(error => {
+            console.log('updating booking info',error);
+        })
+}
 

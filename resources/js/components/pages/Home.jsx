@@ -14,7 +14,7 @@ import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import LoadingSignModal from '../modal/LoadingSignModal';
 import Header from '../layouts/home/Header';
 import {GetUserInfo} from '../services/AccountService';
-import {GetUserInfoAction} from '../redux/actions/UserAction';
+
 
 
 import WcIcon from '@mui/icons-material/Wc';
@@ -32,14 +32,6 @@ export default function Home() {
     const user_id = useSelector(state => state.user.id);
     const index = useSelector(state => state.booking.index);
     const filter = useSelector(state => state.search.filter);
-    console.log('index', index);
-    console.log('full_name', full_name);
-    console.log('user_id', user_id);
-    console.log('filter', filter);
-
-    useEffect(() => {
-        dispatch(GetUserInfoAction());
-    },[]);
 
     useEffect(() => {
         let isMounted = true;

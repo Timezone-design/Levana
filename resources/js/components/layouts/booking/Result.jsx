@@ -133,7 +133,8 @@ export default function Result(props) {
                         onSwiper={(swiper) => console.log(swiper)}
                         onSlideChange={(e) => changeIndex(e)}
                     >
-                    {escorts?.map((escort, index) => (
+                    {escorts.length > 0 ?
+                        escorts.map((escort, index) => (
                             <SwiperSlide key={index}>
                                 {
                                     tab==3?
@@ -142,7 +143,12 @@ export default function Result(props) {
                                     <img src={`${process.env.MIX_PUBLIC_URL}/${escort.intro_photo}`} alt={escort.full_name}/>
                                 }
                             </SwiperSlide>
-                    ))}
+                        ))
+                        :
+                        <SwiperSlide >
+                            <p>No matching escorts now!</p>
+                        </SwiperSlide>
+                    }
                     </Swiper>
                 </div>
                 <div className='w-full flex py-1 px-2 justify-content-between'>

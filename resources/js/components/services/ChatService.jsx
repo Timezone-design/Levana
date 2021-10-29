@@ -25,6 +25,7 @@ export const SendMessage = async (data) => {
 export const UpdateUnread = async (data) => {
     return await axios.post('/chat/update', data)
         .then(response => {
+            console.log(response);
             return response.data;
         })
         .catch(error => {

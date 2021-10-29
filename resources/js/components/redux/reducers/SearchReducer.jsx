@@ -6,7 +6,7 @@ const initState = {
     },
 }
 
-const SearchReducer = (state = initState, action) => {
+export default function SearchReducer (state = initState, action) {
     if(action.res === undefined)
         return { ...state }
     switch (action.type) {
@@ -36,10 +36,8 @@ const SearchReducer = (state = initState, action) => {
             }
             
         default:
-            return {
-               state
-            }
+            return state;
     }
 }
 
-export default SearchReducer;
+// export default SearchReducer;

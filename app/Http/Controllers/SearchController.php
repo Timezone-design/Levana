@@ -54,24 +54,12 @@ class SearchController extends Controller
     }
 
     public function getFavorites(Request $request) {
-        $client_id = $request['client_id'];
-        $escort_id = $request['escort_id'];
+        $user = User::find(Auth::id());
         $favorite = new Favorite();
-        $favorites = $favorite->where('client_id', $client_id)
-                                ->where('escort_id', $escort_id)
-                                ->where('favorite', true)
-                                ->get();
-        $favorite_profiles = [];
-        foreach ($favorites as $favorite) {
-            $escort_id = $favorite->escort_id;
-            $escortProfile = new EscortProfile();
-            $profile = $escortProfile->where('escort_id', $escort_id)
-                                     ->first();
-            array_push($favorite_profiles, $profile);
-        }
+        $favorite_profiles = $favorite->getFavoriteProfiles($user);
 
         return response()->json([
-            'escorts' => $favorite_profiles,
+            'favorite' => $favorite_profiles,
         ]);
     }
 }

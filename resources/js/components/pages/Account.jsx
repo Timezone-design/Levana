@@ -9,18 +9,20 @@ import AlertModal from '../modal/AlertModal';
 import ConfirmModal from '../modal/ConfirmModal';
 import BottomNav from '../layouts/home/BottomNav';
 import {useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 
 export default function AccountSetting() {
 
     const classes = useStyles();
+    const history = useHistory();
     const old_email = useSelector(state=>state.user.email);
     const user_id = useSelector(state=>state.user.id);
 
     const email = useRef(null);
-    const old = useRef(null);
-    const [old_password, setOldPassWord] = useState('');
+    const old_password = useRef(null);
     const new_password = useRef(null);
     const confirm_password = useRef(null);
+
     const [oldPassWordShow, setOldPassWordShow] = useState(false);
     const [newPassWordShow, setNewPassWordShow] = useState(false);
 
@@ -35,33 +37,40 @@ export default function AccountSetting() {
     }
     const closeAlert = () => {
         setOpen(false);
+        history.push('/home');
     }
     const updateAccount = () => {
-        if (email.current.value=='' ) {
+        //validate email
+        if (email.current.value==null ||email.current.value=='' ) {
             setEmailError('Input your email correctly.');
         }
         else setEmailError('');
-        if (old.current.value !== old_password && old.current.value) {
-            setOldError('Old password is wrong!');
-        }
-        else setOldError('');
+        // validate password match
         if (confirm_password.current.value !== new_password.current.value) {
             setMatchError('Both passwords does not match.');
         }
         else setMatchError('Both passwords must match.');
-        if (email.current.value!== '' && 
-            old.current.value == old_password && 
-            old.current.value == new_password.current.value && 
-            new_password.current.value!=='') {
+        if (old_password.current.value =='' || old_password.current.value ==null) {
+            setOldError('Fill in your current password.');
+        }
+        else setOldError('');
+        // validate email password and send request
+        if (email.current.value!== '' && email.current.value!== null && old_password.current.value !=='' && 
+            old_password.current.value !==null && new_password.current.value == confirm_password.current.value && 
+            new_password.current.value!=='' && new_password.current.value!==null) {
             const data = {
                 user_id:user_id,
-                old_password:old_password,
-                email:email.current.value,
+                old_password:old_password.current.value,
                 new_password:new_password.current.value,
             }
             UpdateAccountInfo(data)
                 .then(response => {
-                    setOpen(true);
+                    if (response.success) {
+                        setOpen(true);
+                    }
+                    else {
+                        setOldError('Your current password is incorrect.');
+                    }
                 })
         }
         
@@ -87,7 +96,7 @@ export default function AccountSetting() {
                 <div className='w-full '>
                     <p>Current PassWord</p>
                     <div className='border rounded-sm px-2 py-1 flex align-items-center justify-between'>
-                        <input className='w-full focus:outline-none' ref={old} type={oldPassWordShow?'text':'password'} defaultValue={old_password} />
+                        <input className='w-full focus:outline-none' ref={old_password} type={oldPassWordShow?'text':'password'} />
                         <div onClick={(e) => setOldPassWordShow(!oldPassWordShow)} 
                              >
                             {oldPassWordShow?
