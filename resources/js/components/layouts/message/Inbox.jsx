@@ -44,7 +44,7 @@ export default function Inbox(props) {
 
     useEffect(() => {
         GetInbox().then(response => {
-            console.log(response);
+            // console.log(response);
             setInboxes(response.inbox);
             setInboxUnread(response.total_unread);
         });

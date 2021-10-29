@@ -12,7 +12,7 @@ export default function Request(props) {
     useEffect(() => {
         let isMounted = true;
         GetRequest().then(response => {
-            console.log(response);
+            // console.log(response);
             if(isMounted) {
                 setRequests(response.request);
                 setRequestUnread(response.total_unread);

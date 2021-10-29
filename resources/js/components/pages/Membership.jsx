@@ -14,7 +14,10 @@ export default function Membership() {
     const history = useHistory();
     const handleClick = async () => {
         await UpgradeMembership().then(response => {
-            console.log(response);
+            // console.log(response);
+            setExpire(response.role.expiration_date);
+            let new_expire_date = new Date(response.role.expiration_date);
+            setExpiration(new_expire_date);
         })
     }
     const [role, setRole] = useState(0);
@@ -23,7 +26,7 @@ export default function Membership() {
 
     useEffect(() => {
         CheckMembership().then(response => {
-            console.log(response);
+            // console.log(response);
             setRole(response.role.role);
             setExpire(response.role.expiration_date);
             let expire_date = new Date(response.role.expiration_date);
