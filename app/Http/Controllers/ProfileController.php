@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\EscortProfile;
 use App\Models\ClientProfile;
 use App\Models\ProfileImage;
 use App\Models\Portfolio;
 use App\Models\Rating;
-use Illuminate\Http\Request;
+use App\Models\SessionDB;
 
 class ProfileController extends Controller
 {
@@ -26,11 +27,14 @@ class ProfileController extends Controller
             $profile = $escort_profile->getEscortProfileByID($user_id);
         }
         $rating = Rating::where('user_id', $user_id)->first();
+        $session = new SessionDB();
+        $active = $session->check($user_id);
         return response()->json([
             'full_name' => $user->full_name,
             'account_type' => $user->account_type,
             'profile' => $profile,
             'rating' => $rating->rating,
+            'active' => $active,
         ]);
     }
     
@@ -87,9 +91,12 @@ class ProfileController extends Controller
     
     public function getProfileImage(Request $request) {
         $user_id = $request['user_id'];
-        $images = ProfileImage::where('user_id', $user_id)->first();        
+        $images = ProfileImage::where('user_id', $user_id)->first();   
+        $session = new SessionDB();
+        $active = $session->check($user_id);     
         return response() ->json([
             'images' => $images,
+            'active' => $active,
         ]);         
     }
 

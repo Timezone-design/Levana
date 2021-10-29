@@ -79,7 +79,6 @@ export default function AccountSetting() {
     const deleteAccount = () => {
         setConfirmModalOpen(false);
         DeleteAccount();
-        window.location.href = '/';
     }
     
     return (

@@ -59,7 +59,6 @@ class AccountController extends Controller
     public function delete() {
         
         $user = User::find(Auth::id()); 
-        Auth::logout();
         $user->delete();
 
         return response()->json([

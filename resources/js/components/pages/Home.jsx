@@ -11,13 +11,10 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
-import LoadingSignModal from '../modal/LoadingSignModal';
 import Header from '../layouts/home/Header';
 import {GetUserInfo} from '../services/AccountService';
-
-
-
 import WcIcon from '@mui/icons-material/Wc';
+// import LoadingSignModal from '../modal/LoadingSignModal';
 
 export default function Home() {
 

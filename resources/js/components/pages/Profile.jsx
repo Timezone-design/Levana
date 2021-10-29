@@ -41,7 +41,7 @@ export default function Profile(props) {
         setLoad(true);
         GetProfile(data)
             .then(response => {
-                // console.log(response);
+                console.log(response);
                 if (isMounted) {
                     setFullName(response.full_name);
                     setRating(response.rating);

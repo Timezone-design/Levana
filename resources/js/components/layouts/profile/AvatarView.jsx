@@ -9,7 +9,7 @@ export default function AvatarView(props) {
     const {viewID} = props;
     const classes = useStyles();
     const [url, setUrl] = useState('');
-    const [active, setActive] = useState(true);
+    const [active, setActive] = useState(false);
 
     useEffect(()=> {
         let isMounted = true;
@@ -21,6 +21,7 @@ export default function AvatarView(props) {
             .then(response => {
                 if(isMounted)
                     setUrl(response.images.avatar);
+                    setActive(response.active);
             });
         }
         return () => {isMounted = false};

@@ -56,7 +56,7 @@ class Booking extends Model
                             ->where('booking.status', '>', 0)
                             ->join('profile_image', 'profile_image.user_id', '=', 'booking.client_id')
                             ->join('users', 'users.id', '=', 'booking.client_id')
-                            ->select('booking.*','booking.escort_read as booking_read','users.name','users.full_name','users.active','profile_image.avatar', 'profile_image.cover')
+                            ->select('booking.*','booking.escort_read as booking_read','users.name','users.full_name','profile_image.avatar', 'profile_image.cover')
                             ->get();
 
         }
@@ -66,7 +66,7 @@ class Booking extends Model
                             ->where('booking.status', '>', 0)
                             ->join('profile_image', 'profile_image.user_id', '=', 'booking.escort_id')
                             ->join('users', 'users.id', '=', 'booking.escort_id')
-                            ->select('booking.*','booking.client_read as booking_read','users.name','users.full_name','users.active','profile_image.avatar', 'profile_image.cover')
+                            ->select('booking.*','booking.client_read as booking_read','users.name','users.full_name','profile_image.avatar', 'profile_image.cover')
                             ->get();
         }
         return $inboxes;
@@ -79,7 +79,7 @@ class Booking extends Model
                             ->where('booking.status', '=', 0)
                             ->join('profile_image', 'profile_image.user_id', '=', 'booking.client_id')
                             ->join('users', 'users.id', '=', 'booking.client_id')
-                            ->select('booking.*','booking.escort_read as booking_read','users.name','users.full_name','users.active','profile_image.avatar', 'profile_image.cover')
+                            ->select('booking.*','booking.escort_read as booking_read','users.name','users.full_name','profile_image.avatar', 'profile_image.cover')
                             ->get();
 
         }
@@ -89,7 +89,7 @@ class Booking extends Model
                             ->where('booking.status', '=', 0)
                             ->join('profile_image', 'profile_image.user_id', '=', 'booking.escort_id')
                             ->join('users', 'users.id', '=', 'booking.escort_id')
-                            ->select('booking.*','booking.client_read as booking_read','users.name','users.full_name','users.active','profile_image.avatar', 'profile_image.cover')
+                            ->select('booking.*','booking.client_read as booking_read','users.name','users.full_name','profile_image.avatar', 'profile_image.cover')
                             ->get();
         }
         return $requests;
