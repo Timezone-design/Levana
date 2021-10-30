@@ -21,6 +21,7 @@ export default function PersonalInbox(props) {
     	opponentID = inbox.client_id;
 
 	const [unread, setUnread] = useState(inbox.unread);
+
 	// pusher event
 	useEffect(() => {
         let isPusher = true;
@@ -29,8 +30,8 @@ export default function PersonalInbox(props) {
         });
         const channel = pusher.subscribe('levana-channel');
         channel.bind('levana-event', (data) => {
-            console.log('pusher');
-            console.log(data);
+            // console.log('pusher');
+            // console.log(data);
             if (data.booking_id == inbox.id && data.receiver_id == user_id && data.sender_id == opponentID && isPusher) {
                 setUnread(unread+1);
                 let res = 1;

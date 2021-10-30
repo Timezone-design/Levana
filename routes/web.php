@@ -47,6 +47,7 @@ Route::get('/account/get', 'App\Http\Controllers\AccountController@get');
 Route::get('/account/delete', 'App\Http\Controllers\AccountController@delete');
 Route::post('/account/update', 'App\Http\Controllers\AccountController@update');
 Route::get('/account/unread', 'App\Http\Controllers\AccountController@unread');
+Route::get('/account/logOut', 'App\Http\Controllers\AccountController@logOut');
 
 // chat api
 Route::post('/chat/get', 'App\Http\Controllers\ChatController@get');

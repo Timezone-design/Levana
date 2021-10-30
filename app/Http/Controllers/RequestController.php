@@ -28,6 +28,7 @@ class RequestController extends Controller
                     $request->last_msg = "I'd like to book you.";
                 $count = Chat::where('booking_id', $request->id)
                             ->where('receiver_id', Auth::id())
+                            ->where('read', false)
                             ->count();
                 $request->unread = $count;
                 $total_unread = $total_unread + $count;

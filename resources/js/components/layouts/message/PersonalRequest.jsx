@@ -36,7 +36,7 @@ export default function PersonalView(props) {
 					client_read:true,
 				}
 			UpdateBooking(data).then(response => {
-				console.log(response);
+				// console.log(response);
 				let res = {
 					count:1
 				}
@@ -54,9 +54,8 @@ export default function PersonalView(props) {
         });
         const channel = pusher.subscribe('levana-channel');
         channel.bind('levana-event', (data) => {
-            console.log('pusher');
-            console.log(data);
-            if (data.booking_id == request.id && data.receiver_id == user_id && data.sender_id == opponentID && isPusher) {
+            // console.log(data);
+            if (data.trigger == 'chat' && data.data.booking_id == request.id && data.data.receiver_id == user_id && data.data.sender_id == opponentID && isPusher) {
                 setUnread(unread+1);
                 let res = 1;
                 dispatch(AddUnreadAction(res));
@@ -68,23 +67,30 @@ export default function PersonalView(props) {
         return () => {
             isPusher = false;
         }
-    });
+    },[user_id, opponentID]);
 
 	return(
 		<div className='bg-white justify-content-between flex align-items-center w-full p-2 rounded-xl h-40'>
 			<img className='border w-5/12 rounded-xl h-full ' src={`${process.env.MIX_PUBLIC_URL}/${request.avatar}`}  alt='booking' />
-			<div className='text-left h-full p-1 w-7/12' style={{fontSize:"0.7rem"}}>
-				<p className='font-bold' style={{fontSize:'0.8rem'}} >{request.full_name}</p>
-				<p>{lastMsg}</p>
-				<p>Date: 30 Sep 2021 | Time: 03:00 PM</p>
-				<p>Duration: {request.duration} Hours</p>
-				<div className='flex align-items-center w-full h-10 space-x-1 p-1'>
-					<img className='border w-3/12 h-full' src='' />
-					<img className='border w-3/12 h-full' src='' />
-					<img className='border w-3/12 h-full' src='' />
+			<Badge badgeContent={request.unread} color="secondary" classes={{root:classes.badge, badge:classes.requestBadge}}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'right',
+					}}
+			>
+				<div className='text-left h-full p-1 w-full' style={{fontSize:"0.7rem"}}>
+					<p className='font-bold' style={{fontSize:'0.8rem'}} >{request.full_name}</p>
+					<p>{lastMsg}</p>
+					<p>Date: 30 Sep 2021 | Time: 03:00 PM</p>
+					<p>Duration: {request.duration} Hours</p>
+					<div className='flex align-items-center w-full h-10 space-x-1 p-1'>
+						<img className='border w-3/12 h-full' src='' />
+						<img className='border w-3/12 h-full' src='' />
+						<img className='border w-3/12 h-full' src='' />
+					</div>
+					<Button onClick={() => handleClick(request)} variant='contained' color='secondary' size='small'>Star Chat</Button>
 				</div>
-				<Button onClick={() => handleClick(request)} variant='contained' color='secondary' size='small'>Star Chat</Button>
-			</div>
+			</Badge>
 		</div>
 
 	)

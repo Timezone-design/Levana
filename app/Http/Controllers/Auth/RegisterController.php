@@ -14,7 +14,6 @@ use App\Models\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Session;
 
 class RegisterController extends Controller
 {
@@ -82,8 +81,8 @@ class RegisterController extends Controller
         $user->account_type = $data['account_type'];
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
-        
         $user->save();
+        
         $account_type = (isset($data['account_type'])) ? $data['account_type'] : 'client';
         if($user->id != NULL) {
             if($account_type =='escort') {

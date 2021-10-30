@@ -29,6 +29,7 @@ export default function Chat(props) {
     const [update, setUpdate] = useState(false);
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
+    const [online, setOnline] = useState(false);
     const elem = useRef(null);
     const updateUnread = () => {
         let data = {
@@ -49,7 +50,7 @@ export default function Chat(props) {
             }
             console.log(data);
             SendMessage(data).then(response =>{
-                console.log(response);
+                // console.log(response);
                 input.current.value = '';
                 setFile(null);
                 setFileName('');
@@ -80,7 +81,7 @@ export default function Chat(props) {
         }
         GetChatRecord(data)
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 setUser2ID(response.user2_id);
                 setRecords(response.record);
                 setUser2Name(response.user2_name);
@@ -98,16 +99,28 @@ export default function Chat(props) {
         });
         const channel = pusher.subscribe('levana-channel');
         channel.bind('levana-event', (data) => {
-            console.log('pusher');
-            console.log(data);
-            if (data.booking_id == booking_id && isPusher) {
-                console.log('getting pusher data');
+            // console.log('pusher');
+            // console.log(data);
+            if (data.trigger == 'chat' && data.data.booking_id == booking_id && isPusher) {
                 // update chat records
-                setRecords([...records, data]);
+                setRecords([...records, data.chat]);
                 // update unread
                 let res = 1;
                 dispatch(AddUnreadAction(res));
+            
+                // Notification.requestPermission( permission => {
+                //   let notification = new Notification('New Message', {
+                //     body: data.chat.content, // content for the alert
+                //     icon: data.images.avatar // optional image url
+                //   });
+
+                //   // link to page on clicking the notification
+                //   notification.onclick = () => {
+                //     window.open(window.location.href);
+                //   };
+                // });
             }
+
         });
         return () => {
             isPusher = false;
@@ -119,10 +132,10 @@ export default function Chat(props) {
             <Header headline='MESSAGE' />
             <div className='flex align-items-center py-2 pl-4 space-x-2'>
                 <div onClick={(e) => history.goBack()} ><ArrowBackIosIcon /></div>
-                <AvatarView viewID={user2_id} />
+                <AvatarView viewID={user2_id} setOnline={setOnline} />
                 <div className='h-full'>
                     <p className='font-bold text-base'>{user2_name}</p>
-                    <p className='font-semibold text-base text-gray-500'>Active Now</p>   
+                    <p className='font-semibold text-base text-gray-500'>{online?'Active Now':'Not Active Now'}</p>   
                 </div>
             </div>
             <div   className='bg-gray-100 overflow-y-auto w-full p-3 relative' style={{height:'73vh'}} >

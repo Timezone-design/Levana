@@ -10,7 +10,9 @@ use App\Models\User;
 use App\Models\Favorite;
 use App\Models\Booking;
 use App\Models\Chat;
+use App\Models\ProfileImage;
 use App\Models\Inbox;
+use Pusher;
 
 class AccountController extends Controller
 {
@@ -75,5 +77,21 @@ class AccountController extends Controller
         return response()->json([
             'unread' => $count,
         ]);
+    }
+
+    public function logOut() {
+        $user = User::find(Auth::id());
+        $images = ProfileImage::where('user_id', $user->id)->first();
+        $pusher = new Pusher\Pusher('3901d394c4dc96fca656', '8bf8e5a81b6b588d670c', '1250939', array('cluster' => 'eu'));
+        $pusher->trigger('levana-channel', 'levana-event', [
+            'trigger' => 'log',
+            'status' => false,
+            'user_id' => $user->id,
+        ]);
+        Auth::logout();
+        return response() ->json([
+            'success' => true,
+        ]);
+
     }
 }

@@ -28,7 +28,7 @@ class Chat extends Model
         'receiver_id',
         'content',
         'file',
-        'unread',
+        'read',
     ];
 
     public function getRecords($booking_id)

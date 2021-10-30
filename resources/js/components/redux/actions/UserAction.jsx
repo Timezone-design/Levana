@@ -14,15 +14,14 @@ export const GetUserInfoAction = () => {
 
 export const AddUnreadAction = (res) => {
     return (dispatch) => {
-            dispatch({type: ActionTypes.ADD_UNREAD, res});
-        }, error => {
-            dispatch({type: ActionTypes.CODE_ERROR, error});
+        dispatch({type: ActionTypes.ADD_UNREAD, res});
     }
 }
 
 export const DiscountUnreadAction = (data) => {
     return async (dispatch) => {
         await UpdateUnread(data).then((res) => {
+            console.log(res);
             dispatch({type: ActionTypes.DISCOUNT_UNREAD, res});
         }, error => {
             dispatch({type: ActionTypes.CODE_ERROR, error});

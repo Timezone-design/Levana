@@ -30,12 +30,12 @@ export const DeleteAccount = async (data) => {
         })
 }
 
-export const GetUnRead = async () => {
-    return await axios.get('/account/unread')
+export const Logout = async () => {
+    return await axios.get('/account/logOut')
         .then(response => {
             return response.data;
         })
         .catch(error => {
-            console.log('unread',error);
-        })
+            console.log('logout',error);
+        });
 }

@@ -182,6 +182,10 @@ export const useStyles = makeStyles(theme => ({
   badge:{
     height:'100% !important',
   },
+  requestBadge:{
+    bottom:'10px !important',
+    right:'10px !important',
+  },
   activeBadge:{
       width:'15px !important',
       height:'15px !important',

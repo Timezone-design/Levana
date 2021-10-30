@@ -8,8 +8,7 @@ import ContactMailIcon from '@mui/icons-material/ContactMail';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SearchIcon from '@mui/icons-material/Search';
 import LogoutIcon from '@mui/icons-material/Logout';
-import axios from 'axios';
-
+import {Logout} from '../services/AccountService';
 export default function Confirm(props) {
     const {isOpen, cancelModal} = props;
     const history = useHistory();
@@ -17,8 +16,11 @@ export default function Confirm(props) {
         Modal.setAppElement('#App');
     })
     const logOut = () => {
-        axios.post('/logout');
-        window.location.href="/";
+        cancelModal();
+        Logout().then(response => {
+            // console.log(response);
+            window.location.href="/";
+        })
     }
     return (
         <Modal
